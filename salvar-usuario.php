@@ -23,10 +23,34 @@ include 'functions.php';
             break;
             
         case 'editar':
-         
+            $nome = $_POST["nome"];
+            $altura = $_POST["altura"];
+            $peso = $_POST["peso"];
+
+            $imc = calcularImc($altura, $peso);
+            $status = statusImc($imc);
+            $sql = "UPDATE usuarios 
+                    SET nome='{$nome}',
+                        altura='{$altura}',
+                        peso='{$peso}',
+                        status='{$status}',
+                        imc='{$imc}'
+                    WHERE 
+                        id=".$_REQUEST["id"];
+
+            $res = $conn->query($sql);
+
+            if ($res == true) {
+                print "<script>alert('Editado com sucesso!');</script>";
+                print "<script>location.href='?page=listar';</script>";
+            } else {
+                print "<script>alert('Não foi possível Editar!');</script>";
+                print "<script>location.href='?page=listar';</script>";
+            }
+
             break;
 
         case 'excluir':
-            
+
             break;
     }
